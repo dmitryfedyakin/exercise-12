@@ -1,4 +1,11 @@
 class Date:
+    '''
+    This class represents a date and provides methods for working with it.
+
+    Attributes:
+        months (dict): A dictionary mapping month numbers to their names in Russian.
+        months_days (dict): A dictionary mapping month numbers to the number of days in them
+    '''
 
     months = {1: "янв", 2: "фев", 3: "мар", 4: "апр",
               5: "май", 6: "июн", 7: "июл", 8: "авг",
@@ -10,10 +17,22 @@ class Date:
                    10: 31, 11: 30, 12: 31}
         
     def __init__(self, date_str):
+        '''
+        Initializes a Date object with a date string.
+        
+        :param date_str: The date in string format.
+        '''
+
         self.__date = None
         self.check_date(date_str)
 
     def check_date(self, date_str):
+        '''
+        Checking a date string on possibility of existence.
+
+        :param date_str: The date in string format.
+        '''
+
         day, month, year = map(int, date_str.split('.'))
         leap = True
         if year % 4 != 0:
@@ -37,26 +56,54 @@ class Date:
 
     @date.setter
     def date(self, date_str):
+        '''
+        Sets the date as a formatted string.
+
+        :param date_str: The date in string format.
+        '''
+
         self.check_date(date_str)
 
     @date.getter
     def date(self):
+        '''
+        Gets the date as a formatted string.
+        '''
+
         if self.__date:
             day, month, year = self.__date
             return f"{day} {Date.months[month]} {year} г."
         
 
     def __eq__(self, other):
+        '''
+        Overriding the comparison operator '=='
+
+        :return: result of comparison
+        '''
+                
         if isinstance(other, Date):
             return self.__date == other.__date
         return False
 
     def __ne__(self, other):
+        '''
+        Overriding the comparison operator '!='
+
+        :return: result of comparison
+        '''
+
         if isinstance(other, Date):
             return not self.__eq__(other)
         return False
 
     def __lt__(self, other):
+        '''
+        Overriding the comparison operator '<'
+
+        :return: result of comparison
+        '''
+
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
 
@@ -68,6 +115,12 @@ class Date:
         return False
 
     def __le__(self, other):
+        '''
+        Overriding the comparison operator '<='
+
+        :return: result of comparison
+        '''
+
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
         
@@ -83,6 +136,12 @@ class Date:
         return False
         
     def __gt__(self, other): 
+        '''
+        Overriding the comparison operator '>'
+
+        :return: result of comparison
+        '''
+                
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
         
@@ -94,6 +153,12 @@ class Date:
         return False
 
     def __ge__(self, other):
+        '''
+        Overriding the comparison operator '>='
+
+        :return: result of comparison
+        '''
+                
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
         
@@ -109,28 +174,67 @@ class Date:
         return False  
     
     def __str__(self):
+        '''
+        Return string representation of an object (for users).
+        '''
+        
         if self.__date:
             day, month, year = self.__date
             return f"{day} {Date.months[month]} {year} г."
 
 class Meeting():
+    '''
+    Represents a meeting with details like date, title, and attendees.
+
+    Attributes:
+        lst_meeting (list): List consider information about meetings
+        NUM (int): Amount of meetings at the date
+    '''
+
     lst_meeting = []
     NUM = 0
 
     def __init__(self, id=None, date=None, title=None, employees=None):
+        '''
+        Initializes a Meeting object.
+
+        :param id: Meeting's id
+        :param date: Date of meeting
+        :param title: Title of meeting
+        :param employees: List of employees
+        '''
+        
         self.id = id
         self.date = date
         self.title = title
         self.employees = employees or []
 
     def add_person(self, person):
+        '''
+         Adds a person to the meeting.
+
+        :param person: Dictionary with person and meeting ids
+        '''
+
         self.employees.append(person)
 
     def count(self):
+        '''
+        Return the number of participants in the meeting.
+        '''
+
         return len(self.employees)
 
     @staticmethod
     def count_meeting(date):
+        '''
+        Counts the number of meetings on a specific date.
+
+        :date: Nescessary date
+
+        :return: result of calculations
+        '''
+        
         count = 0
         for meeting in Meeting.lst_meeting:
             if Date(meeting.date) == date:
@@ -139,9 +243,17 @@ class Meeting():
 
     @staticmethod
     def total():
+        '''
+        Returns the total number of meetings created.
+        '''
+
         return Meeting.NUM
 
     def __str__(self):
+        '''
+        Return string representation of an object (for users).
+        '''
+                
         result = ''
     
         id_list = []
@@ -160,10 +272,26 @@ class Meeting():
                f"{result}" 
 
 class User:
+    '''
+    Represents a user with personal information.
+
+    Attributes:
+        lst_user (list): List consider information about users.
+    '''
     lst_user = []
 
     def __init__(self, id=None, nick_name=None, first_name=None,
                  last_name=None, middle_name=None, gender=None):
+        '''
+        Initializes a User object.
+
+        :param id: The unique ID of the user.
+        :param nick_name: The username or login name.
+        :param first_name: The user's first name.
+        :param last_name: The user's last name.
+        :param middle_name: The user's middle name.
+        :param gender: The user's gender.
+        '''
         
         self.id = id
         self.nick_name = nick_name
@@ -172,7 +300,10 @@ class User:
         self.middle_name = middle_name
         self.gender = gender
 
-    def __str__(self):        
+    def __str__(self):    
+        '''
+        Return string representation of an object (for users).
+        '''    
         str_gender = ''
 
         if self.id != '':
@@ -217,11 +348,22 @@ class User:
         return str_id + str_nick + str_name + str_gender
     
     def __repr__(self):
+        '''
+        Return formal string representation of an object (for developers).
+        '''
+
         return self.__str__()
 
 class Load:
     @staticmethod
     def write(filename_1, filename_2, filename_3):
+        '''
+        Reads data from files and stores it in lists.
+
+        :param filename_1: Name of the first file.
+        :param filename_2: Name of the second file.
+        :param filename_3: Name of the third file.
+        '''
 
         with open(filename_1, "r", encoding="utf-8") as f_1:
             attributes = f_1.readline().strip().split(";")

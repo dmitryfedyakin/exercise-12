@@ -1,4 +1,11 @@
 class Date:
+    '''
+    This class represents a date and provides methods for working with it.
+
+    Attributes:
+        months (dict): A dictionary mapping month numbers to their names in Russian.
+        months_days (dict): A dictionary mapping month numbers to the number of days in them
+    '''
 
     months = {1: "янв", 2: "фев", 3: "мар", 4: "апр",
               5: "май", 6: "июн", 7: "июл", 8: "авг",
@@ -10,10 +17,22 @@ class Date:
                    10: 31, 11: 30, 12: 31}
         
     def __init__(self, date_str):
+        '''
+        Initializes a Date object with a date string.
+        
+        :param date_str: The date in string format.
+        '''
+
         self.__date = None
         self.check_date(date_str)
 
     def check_date(self, date_str):
+        '''
+        Checking a date string on possibility of existence.
+
+        :param date_str: The date in string format.
+        '''
+
         day, month, year = map(int, date_str.split('.'))
         leap = True
         if year % 4 != 0:
@@ -37,16 +56,32 @@ class Date:
 
     @date.setter
     def date(self, date_str):
+        '''
+        Sets the date as a formatted string.
+
+        :param date_str: The date in string format.
+        '''
+
         self.check_date(date_str)
 
     @date.getter
     def date(self):
+        '''
+        Gets the date as a formatted string.
+        '''
+
         if self.__date:
             day, month, year = self.__date
             return f"{day} {Date.months[month]} {year} г."
 
 
     def to_timestamp(self):
+        '''
+        Calculates the amount of seconds since 01.01.1970
+
+        :return: amount of seconds
+        '''
+
         if self.__date is not None:
 
             day, month, year = self.__date
@@ -96,16 +131,34 @@ class Date:
             
 
     def __eq__(self, other):
+        '''
+        Overriding the comparison operator '=='
+
+        :return: result of comparison
+        '''
+
         if isinstance(other, Date):
             return self.__date == other.__date
         return False
 
     def __ne__(self, other):
+        '''
+        Overriding the comparison operator '!='
+
+        :return: result of comparison
+        '''
+
         if isinstance(other, Date):
             return not self.__eq__(other)
         return False
 
     def __lt__(self, other):
+        '''
+        Overriding the comparison operator '<='
+
+        :return: result of comparison
+        '''
+
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
 
@@ -117,6 +170,12 @@ class Date:
         return False
 
     def __le__(self, other):
+        '''
+        Overriding the comparison operator '<='
+
+        :return: result of comparison
+        '''
+
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
         
@@ -132,6 +191,12 @@ class Date:
         return False
         
     def __gt__(self, other): 
+        '''
+        Overriding the comparison operator '>'
+
+        :return: result of comparison
+        '''
+
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
         
@@ -143,6 +208,12 @@ class Date:
         return False
 
     def __ge__(self, other):
+        '''
+        Overriding the comparison operator '>='
+
+        :return: result of comparison
+        '''
+
         day_1, month_1, year_1 = self.__date
         day_2, month_2, year_2 = other.__date
         
@@ -158,5 +229,9 @@ class Date:
         return False  
     
     def __str__(self):
+        '''
+        Return string representation of an object (for users).
+        '''
+        
         return self.__date if self.__date != None else 'None'
 
