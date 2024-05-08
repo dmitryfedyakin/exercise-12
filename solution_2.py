@@ -31,24 +31,15 @@ class AirTicket:
         '''
         Return string representation of an object (for users).
         '''
-        
-        name_len = len(self.passenger_name)
-        from_len = len(self._from)
-        to_len = len(self.to)
-        date_time_len = len(self.date_time)
-        flight_len = len(self.flight)
-        seat_len = len(self.seat)
-        class_len = len(self._class)
-        gate_len = len(self.gate)
 
-        return f"|{self.passenger_name}{(16 - name_len) * ' '}|" \
-               f"{self._from}{(4 - from_len) * ' '}|" \
-               f"{self.to}{(3 - to_len) * ' '}|" \
-               f"{self.date_time}{(16 - date_time_len) * ' '}|" \
-               f"{self.flight}{(20 - flight_len) * ' '}|" \
-               f"{self.seat}{(4 - seat_len) * ' '}|" \
-               f"{self._class}{(3 - class_len) * ' '}|" \
-               f"{self.gate}{(4 - gate_len) * ' '}|"
+        return f"|{self.passenger_name.ljust(16)}|" \
+               f"{self._from.ljust(4)}|" \
+               f"{self.to.ljust(3)}|" \
+               f"{self.date_time.ljust(16)}|" \
+               f"{self.flight.ljust(20)}|" \
+               f"{self.seat.ljust(4)}|" \
+               f"{self._class.ljust(3)}|" \
+               f"{self.gate.ljust(4)}|"
     
 class Load:
     '''
