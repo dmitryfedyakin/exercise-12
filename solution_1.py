@@ -26,32 +26,61 @@ class Date:
         self.__date = None
         self.check_date(date_str)
 
+    def leap(year):
+        '''
+        Return leap year or not
+
+        '''
+        
+        if year % 4 != 0:
+            return False
+        elif year % 100 == 0:
+            if year % 400 != 0:
+                return False
+            
+            return True
+        return True
+
     def check_date(self, date_str):
         '''
         Checking a date string on possibility of existence.
 
         :param date_str: The date in string format.
+
+        :return: Date in new format
         '''
 
         day, month, year = map(int, date_str.split('.'))
-        leap = True
-        if year % 4 != 0:
-            leap = False
-        elif year % 100 == 0:
-            if year % 400 != 0:
-                leap = False
-        
-        if leap == True:
-            Date.months_days[2] = 29
-        else:
-            Date.months_days[2] = 28
 
-        if 1 <= month <= 12 and day <= Date.months_days[month]:
-            self.__date = (day, month, year)
+        if 1 <= month <= 12:
+            
+            if month == 2:
+                if Date.leap(year):
+                    if 1 <= day <= 29:
+                        self.__date = (day, month, year)
+                    else:
+                        print("ошибка")
+                        self.__date = None
+                    
+                else:
+                    if 1 <= day <= 28:
+                        self.__date = (day, month, year)
+                    else:
+                        print("ошибка")
+                        self.__date = None
 
+            else:
+                if 1 <= day <= Date.months_days[month]:
+                    self.__date = (day, month, year)
+                else:
+                    print("ошибка")
+                    self.__date = None
         else:
             print("ошибка")
+            self.__date = None
 
+        return self.__date
+        
     date = property()
 
     @date.setter
@@ -70,10 +99,9 @@ class Date:
         Gets the date as a formatted string.
         '''
 
-        if self.__date:
+        if self.__date is not None:
             day, month, year = self.__date
             return f"{day} {Date.months[month]} {year} г."
-
 
     def to_timestamp(self):
         '''
@@ -89,14 +117,8 @@ class Date:
             begin_y = 1970
             days_years = 0
             while begin_y != year:
-                leap = True
-                if begin_y % 4 != 0:
-                    leap = False
-                elif begin_y % 100 == 0:
-                    if begin_y % 400 != 0:
-                        leap = False
-
-                if leap:
+                
+                if Date.leap(begin_y):
                     days_in_year = 366
                 else:
                     days_in_year = 365
@@ -107,22 +129,21 @@ class Date:
             begin_y_m = 1
             days_months = 0
 
-            leap = True
-            if year % 4 != 0:
-                leap = False
-            elif year % 100 == 0:
-                if year % 400 != 0:
-                    leap = False
-            if leap:
-                Date.months_days[2] = 29 
-            else:
-                Date.months_days[2] = 28
-
             while begin_y_m != month:
+                
+                if begin_y_m == 2:
+                    if Date.leap(year):
+                        days_months += 29
+                        begin_y_m += 1
 
-                days_in_month = Date.months_days[begin_y_m]
-                days_months += days_in_month
-                begin_y_m += 1
+                    else:
+                        days_months += 28
+                        begin_y_m += 1
+
+                else:
+                    days_in_month = Date.months_days[begin_y_m]
+                    days_months += days_in_month
+                    begin_y_m += 1
 
             days = days_years + days_months + day
             seconds = (days - 1) * 86400
@@ -167,6 +188,8 @@ class Date:
                 if day_1 < day_2:
                     return True
                 
+                return False
+            return False  
         return False
 
     def __le__(self, other):
@@ -188,6 +211,8 @@ class Date:
                 if day_1 <= day_2:
                     return True
                 
+                return False 
+            return False     
         return False
         
     def __gt__(self, other): 
@@ -205,6 +230,8 @@ class Date:
                 if day_1 > day_2:
                     return True
                 
+                return False 
+            return False 
         return False
 
     def __ge__(self, other):
@@ -226,12 +253,23 @@ class Date:
                 if day_1 >= day_2:
                     return True
                 
+                return False
+            return False
         return False  
     
     def __str__(self):
         '''
         Return string representation of an object (for users).
         '''
+        if self.__date is not None:
+            day, month, year = self.__date
+            return f"{day} {Date.months[month]} {year} г."
         
-        return self.__date if self.__date != None else 'None'
+        return 'None'
+    
+
+
+
+
+
 
