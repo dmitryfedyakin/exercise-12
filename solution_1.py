@@ -188,8 +188,6 @@ class Date:
                 if day_1 < day_2:
                     return True
                 
-                return False
-            return False  
         return False
 
     def __le__(self, other):
@@ -210,9 +208,7 @@ class Date:
             elif month_1 == month_2:
                 if day_1 <= day_2:
                     return True
-                
-                return False 
-            return False     
+                    
         return False
         
     def __gt__(self, other): 
@@ -230,8 +226,6 @@ class Date:
                 if day_1 > day_2:
                     return True
                 
-                return False 
-            return False 
         return False
 
     def __ge__(self, other):
@@ -253,8 +247,6 @@ class Date:
                 if day_1 >= day_2:
                     return True
                 
-                return False
-            return False
         return False  
     
     def __str__(self):
